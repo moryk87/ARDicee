@@ -67,6 +67,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.run(configuration)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let userTouch = touches.first {
+            let userTouchLocation = userTouch.location(in: sceneView)
+            
+            let userTouchLocationResult = sceneView.hitTest(userTouchLocation, types: .existingPlaneUsingExtent)
+            
+            //is not empty
+            if !userTouchLocationResult.isEmpty {
+                print("touched the plane")
+            } else {
+                print("touched outside of the plane")
+            }
+            
+        }
+    }
+    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         
         if anchor is ARPlaneAnchor {
